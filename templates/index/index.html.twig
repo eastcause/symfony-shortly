@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Strona główna{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        {% for flash in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ flash }}
+            </div>
+        {% endfor %}
+
+
+        {% for flash in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ flash }}
+            </div>
+        {% endfor %}
+
+        {{ form_start(shortForm) }}
+        {{ form_row(shortForm.url) }}
+
+        <button type="submit" class="btn btn-primary">Skróć</button>
+        {{ form_end(shortForm) }}
+    </div>
+{% endblock %}

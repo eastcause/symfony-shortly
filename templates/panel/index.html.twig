@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panel użytkownika{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+
+        {% for flash in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ flash }}
+            </div>
+        {% endfor %}
+
+
+        {% for flash in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ flash }}
+            </div>
+        {% endfor %}
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">lp.</th>
+                <th scope="col">Skrócony link</th>
+                <th scope="col">Link</th>
+                <th scope="col">Stworzony</th>
+                <th scope="col">Akcje</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% set i = 1 %}
+            {% for url in urls %}
+                <tr>
+                    <th scope="row">{{ i }}</th>
+                    <td><a href="{{ redirect_url }}{{ url.shortUrl }}" target="_blank">{{ redirect_url }}{{ url.shortUrl }}</a></td>
+                    <td><input disabled type="url" class="form-control" value="{{ url.url }}"></td>
+                    <td>{{ url.createdAt|date('d.m.y H:i:s') }}</td>
+                    <td><button type="button" class="btn btn-danger" onclick="window.location.href = '{{ path('app_panel_delete', {'id': url.id}) }}'">Usuń</button></td>
+                </tr>
+                {% set i = i + 1 %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
